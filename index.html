@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f3f9ff">
+<title>Kuu Kuu | Live Giveaway Draw</title>
+<style>
+:root { --blue:#1c69da;--deep:#123d87;--light:#edf6ff;--line:#dceafa;--ink:#20344e;--soft:#7388a3; }
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;}
+body{margin:0;min-height:100svh;background:radial-gradient(ellipse 65% 38% at 5% 10%,#e1f0ff 0,transparent 90%),radial-gradient(ellipse 75% 50% at 90% 100%,#e0f0ff 0,transparent 88%),#f7fbff;color:var(--ink);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;display:flex;justify-content:center;align-items:center;padding:22px 12px}
+button{font:inherit;cursor:pointer}
+button:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid #71acff;outline-offset:3px}
+.board{position:relative;width:min(100%,540px);overflow:hidden;background:white;border:1px solid #d9eafc;border-radius:27px;padding:24px;box-shadow:0 20px 65px rgba(31,90,160,.11),0 4px 15px rgba(31,90,160,.04)}
+.board:before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:linear-gradient(90deg,#d8edff 0%,#1575ea 50%,#d8edff 100%)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px}
+.mark{display:grid;place-items:center;background:#e9f4ff;border:1px solid #c7e1ff;color:#1669d8;border-radius:13px;width:40px;height:40px;font-size:14px;font-weight:900;letter-spacing:-1.2px}
+.brand b{display:block;color:#19427f;font-weight:850;letter-spacing:1.8px;font-size:14px;line-height:1.2}
+.brand span{font-size:9px;font-weight:700;letter-spacing:2.0px;color:#7d96b5}
+.live{display:flex;align-items:center;gap:6px;color:#1d72d6;font-size:9px;letter-spacing:1.2px;font-weight:900;border:1px solid #cfe6ff;background:#f2f9ff;padding:8px 10px;border-radius:999px;white-space:nowrap}
+.live i{width:7px;height:7px;background:#2785ec;border-radius:50%;box-shadow:0 0 0 4px #d8ecff}
+.heading{text-align:center;padding-top:17px}
+.kicker{text-transform:uppercase;font-size:10px;letter-spacing:2.6px;color:var(--blue);font-weight:900;margin:0 0 6px}
+h1{font-size:clamp(26px,7.4vw,36px);line-height:1.08;letter-spacing:-1.4px;margin:0;color:#184485;font-weight:850}
+.subhead{font-size:12px;color:#8194aa;margin:8px 0 0}
+.prizes{display:flex;gap:7px;margin-top:17px}
+.prize{flex:1;min-width:0;padding:10px 8px;background:#f3f9ff;border:1px solid #e0efff;border-radius:12px;display:flex;align-items:center;gap:7px}
+.prize .gift{font-size:21px;line-height:1}
+.prize b{display:block;font-size:11px;line-height:1.2;color:#2d5285}
+.prize small{font-size:10px;color:#8098b5}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.stat{border:1px solid var(--line);border-radius:12px;padding:9px 6px;text-align:center;background:#fff}
+.stat b{display:block;color:#1f61c4;font-weight:900;font-size:22px;font-variant-numeric:tabular-nums;line-height:1.1}
+.stat small{display:block;font-size:9px;letter-spacing:1.3px;font-weight:800;color:#8c9cb2;text-transform:uppercase;margin-top:3px}
+.stage{margin-top:14px;min-height:126px;border-radius:17px;background:linear-gradient(135deg,#edf7ff,#e1f0ff 75%,#eff9ff);border:1px solid #c7e5ff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16px 11px;position:relative;overflow:hidden}
+.stage:before,.stage:after{content:"✦";position:absolute;color:#bfdefe;font-size:32px}.stage:before{top:9px;left:16px}.stage:after{bottom:9px;right:18px;font-size:23px}
+.stage-label{font-size:10px;font-weight:900;letter-spacing:2.1px;color:#4388d3;margin-bottom:10px;z-index:1}
+.ticker{font-size:clamp(18px,5.4vw,27px);font-weight:850;color:#1457b0;min-height:30px;line-height:1.3;overflow-wrap:anywhere;z-index:1;transition:transform .15s,opacity .15s}
+.ticker.spin{color:#2f8bee;filter:blur(.35px)}
+.stage-help{font-size:10px;color:#6795c7;margin-top:8px;z-index:1}
+.winner-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:16px 0 10px}
+.winner-head b{color:#264b7c;font-size:13px;letter-spacing:.1px}
+.winner-head span{color:#88a1be;font-size:10px}
+.winners{display:grid;grid-template-columns:1fr;gap:7px}
+.winner{height:52px;display:flex;align-items:center;gap:11px;padding:7px 11px;border-radius:11px;border:1px solid #e4edf9;background:#fbfdff;transition:background .25s,border-color .25s,transform .25s}
+.winner.won{background:#eff7ff;border-color:#add4ff;animation:popin .4s ease-out}
+@keyframes popin{0%{transform:scale(.97);opacity:.65}100%{transform:scale(1);opacity:1}}
+.num{width:31px;height:31px;flex:none;display:grid;place-items:center;border-radius:9px;color:#90a9c7;background:#eaf3fc;font-size:14px;font-weight:900}
+.won .num{background:#2778e2;color:white}
+.details{flex:1;min-width:0}
+.details b{display:block;color:#8da4bd;font-size:12px;font-weight:750;overflow-wrap:anywhere;line-height:1.2}
+.won .details b{color:#124c9c;font-size:13px}
+.details small{display:block;color:#8aa1ba;font-size:10px;margin-top:3px}
+.won .details small{color:#4779b3}
+.tick{color:#267eea;font-size:17px;font-weight:900;flex:none}
+.actions{margin-top:15px}
+.primary{width:100%;height:52px;background:linear-gradient(110deg,#1570e5,#247ff1);border:0;border-radius:13px;color:#fff;font-size:15px;font-weight:850;box-shadow:0 8px 19px rgba(30,112,222,.23);transition:opacity .15s,transform .15s}
+.primary:not(:disabled):active{transform:translateY(2px)}
+.primary:disabled{opacity:.62;cursor:not-allowed;box-shadow:none}
+.secondary-line{display:flex;align-items:center;justify-content:center;gap:11px;margin-top:10px}
+.textbtn{border:0;background:none;color:#6e91be;font-size:11px;font-weight:750;padding:6px 4px}
+.textbtn:hover{text-decoration:underline}
+.sep{width:1px;height:13px;background:#d8e5f5}
+.disclaimer{text-align:center;color:#91a4bc;font-size:10px;margin:11px 0 0;line-height:1.5}
+details{margin-top:11px;padding:0 3px}
+summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;font-size:10px;color:#7897bc;font-weight:750;padding:4px}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"⌄";font-size:15px}
+details[open] summary:after{content:"⌃"}
+.participants{margin-top:9px;max-height:125px;overflow:auto;border:1px solid #daeafc;border-radius:10px;background:#fafdff;padding:10px 14px;font-size:10px;color:#5b7ba1;line-height:1.75;column-count:2;column-gap:12px;overflow-wrap:anywhere}
+.foot{text-align:center;margin-top:12px;color:#a2b5ca;font-size:9px;letter-spacing:.45px}
+.confetti{position:absolute;top:-10px;width:8px;height:12px;pointer-events:none;border-radius:2px;z-index:5;animation:fall var(--duration) ease-in forwards;animation-delay:var(--delay);opacity:0}
+@keyframes fall{0%{opacity:1;transform:translate3d(0,-5px,0) rotate(0)}100%{opacity:.1;transform:translate3d(var(--dx),650px,0) rotate(570deg)}}
+@media(max-width:440px){body{padding:8px 7px;align-items:flex-start}.board{padding:17px 15px 12px;border-radius:18px}.heading{padding-top:14px}.prizes{margin-top:13px}.prize{padding:8px 7px}.stats{margin-top:9px}.stat{padding:8px 4px}.stage{margin-top:10px;min-height:114px;padding:12px 9px}.winner-head{margin:12px 0 8px}.winner{height:49px}.actions{margin-top:12px}.primary{height:48px}.secondary-line{margin-top:5px}.disclaimer{margin:4px 0 0}.foot{margin-top:8px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<main class="board" id="board">
+ <div class="top"><div class="brand"><div class="mark">KK</div><div><b>KUU KUU</b><span>ONLINE BOUTIQUE</span></div></div><div class="live"><i></i> RANDOM DRAW</div></div>
+ <div class="heading"><p class="kicker">A Little Gift, A Lot of Love</p><h1>Perfume Giveaway</h1><p class="subhead">4 lucky winners · 4 perfume decants · 5 ml each</p></div>
+ <div class="prizes"><div class="prize"><div class="gift">✿</div><div><b>Versace Bright Crystal</b><small>2 × 5 ml</small></div></div><div class="prize"><div class="gift">✧</div><div><b>Montblanc Legend</b><small>2 × 5 ml</small></div></div></div>
+ <div class="stats"><div class="stat"><b id="count">223</b><small>Followers loaded</small></div><div class="stat"><b><span id="picked">0</span><span style="color:#acbeda;font-size:16px"> / 4</span></b><small>Winners selected</small></div></div>
+ <div class="stage" aria-live="polite" aria-atomic="true"><div class="stage-label" id="stageLabel">READY TO PICK</div><div class="ticker" id="ticker">Your lucky moment ✨</div><div class="stage-help" id="stageHelp">Tap the button below to begin</div></div>
+ <div class="winner-head"><b>🏆 Lucky Winners</b><span>One person · One prize</span></div>
+ <div class="winners" id="winners">
+  <div class="winner"><div class="num">01</div><div class="details"><b>Waiting for winner...</b><small>Versace Bright Crystal · 5 ml</small></div></div>
+  <div class="winner"><div class="num">02</div><div class="details"><b>Waiting for winner...</b><small>Versace Bright Crystal · 5 ml</small></div></div>
+  <div class="winner"><div class="num">03</div><div class="details"><b>Waiting for winner...</b><small>Montblanc Legend · 5 ml</small></div></div>
+  <div class="winner"><div class="num">04</div><div class="details"><b>Waiting for winner...</b><small>Montblanc Legend · 5 ml</small></div></div>
+ </div>
+ <div class="actions"><button class="primary" id="draw">DRAW WINNER 1 ✦</button><div class="secondary-line"><button class="textbtn" id="reset">↻ Reset draw</button><div class="sep"></div><button class="textbtn" id="export" disabled>↓ Save results</button></div></div>
+ <p class="disclaimer">New random draw • No repeated winners • 223 usernames loaded</p>
+ <details><summary>View all participants</summary><div id="participants" class="participants"></div></details>
+ <div class="foot">KUU KUU ONLINE BOUTIQUE  ·  MADE WITH LOVE ♡</div>
+</main>
+<script>
+'use strict';
+const originalNames=["tin.mar.myint.hlai", "yadanarsoe1412", "zwetzmm", "peterpaker284", "moethetzun892005", "nika24402", "lian.lord", "user7257112981009", "11_as_1", "chit.lady0", "hnin99lay", "ladylay8888", "saungmt", "yukithaemyt", "drkyileiyadanar", "user8332687956168", "khin17096", "marieym", "shweyeekhinelwin8", "zxbyca123", "chit.tha.mee.chaw1710", "kiko65772", "smh11082", "phoo.phoo08634", "wphrl5", "po.po.pyae.sone0", "yuya.moe.sett", "berry.xiao92", "bywahhlaing2", "moe14485", "crystal.cho85", "xing.thada.htet", "thumudaya99", "may.july.moe958", "honey.hsu.lai.han", "win.lat.lat.phyoe", "girllay306", "nycto_philia02", "kophyo82327", "hnin.pann.eain05", "nge.oo084", "rafaelleao751", "thirishinthant253", "mommys.chit.ma.wa", "khin.swe677", "shwe.yee81468", "aungye850", "superiorxzenaku", "san.mi60", "user584288543793", "yunandarkyaw152", "strawberry12678", "silversun0.0", "kiiwi46", "khant.jpg", "aungkolin0613", "khin.khin.soe97", "hanni1325", "nay.chi.oo3542", "ar01504", "hanna17606", "user8674681511829", "kiwi80425", "july19200422", "poe13972", "gtmtygalay", "mee.mee.ye.ye.ni4", "xuechen202", "moeayeayelay.733", "thaethaemyintaung6255", "su.hnin.wai9655", "yaminshwesinhtet78", "mimi79714", "meme111171", "selr36", "apirl_may1", "user629545760", "..nawh", "koreangiggachard", "aunggyikyaw0", "siro_thegoated63", "candranoclant257", "honey.aung28", "nangyeemonsitthu1", "id_yoon", "empirexleagand", "user3340044935205", "kyaw.thiha_43", "yemannaung1370", "zizhe_174", "slrpzw3.lol4", "pwintsowon9", "shemhune", "poe.ta.pyan.00", "naychi.7777777", "honglishoes", "htethtetsaungoo20093", "ayetuzar91", "m.z.m7777", "sandimyozaw6", "hlyan55", ".yamin27", "momi15004", "ace671208", "ma.chal8", "ruby_ruby997", "user33970043", "khinsandarlynn0", "user699284017", "littlebee649", "lauradella77", "pretty_daisy04", "atibhone405", "pjbyphway", "mee.a_s", "mabree964", "susandi794", "uraisvjkynd", "ngwe.zalap", "thet0149", "zawhtetsan", "khit.wati.thit", "thandar.shwe.yee", "mayko0205", "nawarat.soe.moe", "vanderlei.pereira031", "liuvia4", "mppp8560", "jnx_kii", "hnin.ei.wai16", "crystal.u42", "vib.yui", "suhlainghtet95", "tikyikhant117", "chithhsuwai", "hnin.wai.wai16", "thiri28870", "nyo5609", "sheluvcola", "user426729744", "wint.war.aung12", "lilacmuse004", "first.snow36", "sarin8131", "yyy1234567jdkdjf", "su.san8306", "soawarossonglon", "bukbui1", "pantatou_mp", "katie1352026", "tictoker1101", "myatnoe.cherry", "nblawer8", "hninlaephyu5", "dreamy7937", "hmuehmue937", "honey.cho9863", "khaingmyintzu96", "heinn570", "strepsil2699", "kyawzinthan91", "blow5823", "jasminjs040", "thirisoe783", "reno28270", "bow02784", "jerryswift", "pu.tuu078", "miamoh20", "lupan387", "zhenmeilian2", "crystalyiyi", "55829191ww", "candel_58", "shweye964", "hsu.myat6942", "honeyhtun53", "doubleaungaugust", "thu_zar_win_", "you.tit4", "wei663629", "daw.han.han.thant", "ayemyintzulay", "katherinepucute", "mayzin4168", "leonalane95", "daisykhaing", "khinyadanarhtike68", "user9121816192922", "chun_yan15", "user85338710142092", "belle_phyu", "k1era53", "jp514248", "su.lae.phyu55", "pan.ei412", "mamaymyat3", "waiwailay427", "augustmhan1192005", "meemeems2025", "yi.yi8165", "yihtun12345", "khaingmyoaye0", "matchaoreo14", "maythae8311", "user7629827613430", "thetzin96", "pinkypanther20", "etha7909", "lady_phh", "k.z.o097", "lilithn008", "dawnyeinnge", "htet.htet.aung2134", "nyeinsulatthtun", "solitude290", "eemah.ih", "phyophto6183", "linhteinkyaw", "kx_kathy", "aakko2024", "modest_hunter", "itsmemoon1096"];
+const prizes=['Versace Bright Crystal · 5 ml','Versace Bright Crystal · 5 ml','Montblanc Legend · 5 ml','Montblanc Legend · 5 ml'];
+const board=document.getElementById('board');
+const ticker=document.getElementById('ticker'),stageLabel=document.getElementById('stageLabel'),stageHelp=document.getElementById('stageHelp');
+const button=document.getElementById('draw'),resetBtn=document.getElementById('reset'),exportBtn=document.getElementById('export');
+const winnerEls=Array.from(document.querySelectorAll('.winner'));
+let remaining=[...originalNames], results=[], busy=false;
+document.getElementById('count').textContent=originalNames.length;
+document.getElementById('participants').textContent=originalNames.map((n,i)=>String(i+1).padStart(3,'0')+' · @'+n).join('\n');
+document.getElementById('participants').style.whiteSpace='pre-line';
+function randomIndex(max){
+ if(!window.crypto||typeof crypto.getRandomValues!=='function')throw Error('Your browser does not support secure random selection. Open this file in the latest Chrome or Safari.');
+ const range=4294967296;
+ const limit=range-(range%max);
+ const u=new Uint32Array(1);
+ do{crypto.getRandomValues(u)}while(u[0]>=limit);
+ return u[0]%max;
+}
+function confetti(){
+ const colors=['#2f85ef','#8cc7ff','#d2eaff','#b2d7ff','#1457b0'];
+ for(let i=0;i<26;i++){
+  const c=document.createElement('i');c.className='confetti';
+  c.style.left=(7+Math.random()*86)+'%';c.style.background=colors[i%colors.length];
+  c.style.setProperty('--dx',(Math.random()*220-110)+'px');
+  c.style.setProperty('--duration',(1.4+Math.random()*1.1)+'s');
+  c.style.setProperty('--delay',(Math.random()*.4)+'s');
+  board.appendChild(c);setTimeout(()=>c.remove(),3100);
+ }
+}
+function render(){
+ document.getElementById('picked').textContent=results.length;
+ winnerEls.forEach((el,i)=>{
+  const picked=results[i];el.classList.toggle('won',Boolean(picked));
+  el.querySelector('.details b').textContent=picked?'@'+picked:'Waiting for winner...';
+  let check=el.querySelector('.tick');
+  if(picked&&!check){check=document.createElement('span');check.className='tick';check.textContent='✓';el.appendChild(check)}
+  if(!picked&&check)check.remove();
+ });
+ exportBtn.disabled=results.length===0;
+ if(results.length===4){button.textContent='ALL 4 WINNERS SELECTED ✓';button.disabled=true}
+ else {button.textContent='DRAW WINNER '+(results.length+1)+' ✦';button.disabled=busy}
+}
+function draw(){
+ if(busy||results.length>=4)return;
+ busy=true;render();button.textContent='PICKING A WINNER…';
+ stageLabel.textContent='DRAWING WINNER '+String(results.length+1).padStart(2,'0');
+ stageHelp.textContent='Shuffling eligible usernames…';
+ ticker.classList.add('spin');
+ let step=0;
+ const steps=26;
+ function cycle(){
+  // Only the animation uses the visual sequence. The final winner is drawn separately.
+  const previewIndex=(step*37+17)%remaining.length;
+  ticker.textContent='@'+remaining[previewIndex];
+  step++;
+  if(step<steps){setTimeout(cycle,step<18?75:95+(step-18)*28);return}
+  try{
+   const idx=randomIndex(remaining.length);
+   const winner=remaining.splice(idx,1)[0];
+   results.push(winner);
+   stageLabel.textContent='WINNER '+String(results.length).padStart(2,'0')+' SELECTED';
+   ticker.textContent='@'+winner;ticker.classList.remove('spin');
+   stageHelp.textContent=prizes[results.length-1];
+   busy=false;render();confetti();
+  }catch(err){busy=false;render();ticker.classList.remove('spin');stageLabel.textContent='UNABLE TO DRAW';ticker.textContent='Please use Chrome or Safari';stageHelp.textContent=err.message}
+ }
+ cycle();
+}
+function reset(){
+ if(busy)return;
+ if(results.length && !confirm('Start a new random draw? This will clear the selected winners.'))return;
+ remaining=[...originalNames];results=[];
+ stageLabel.textContent='READY TO PICK';ticker.textContent='Your lucky moment ✨';ticker.classList.remove('spin');stageHelp.textContent='Tap the button below to begin';
+ document.querySelectorAll('.confetti').forEach(x=>x.remove());render();
+}
+function save(){
+ if(!results.length)return;
+ const when=new Date().toLocaleString();
+ const lines=['KUU KUU ONLINE BOUTIQUE — GIVEAWAY DRAW','Time: '+when,'Participants loaded: '+originalNames.length,'Method: browser crypto.getRandomValues, uniform draw without replacement','','WINNERS',...results.map((n,i)=>`${i+1}. @${n} — ${prizes[i]}`),'','Note: Follower list alone does not verify compliance with giveaway rules.'];
+ const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'});
+ const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Kuu_Kuu_Giveaway_Results.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);
+}
+button.addEventListener('click',draw);resetBtn.addEventListener('click',reset);exportBtn.addEventListener('click',save);render();
+</script>
+</body>
+</html>
